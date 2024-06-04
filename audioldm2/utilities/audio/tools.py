@@ -39,14 +39,13 @@ def read_wav_file(filename, segment_length):
 
     return waveform
 
-
 def get_mel_from_wav(audio, _stft):
-    audio = torch.clip(torch.FloatTensor(audio).unsqueeze(0), -1, 1)
+    audio = torch.clip(torch.FloatTensor(audio), -1, 1)
     audio = torch.autograd.Variable(audio, requires_grad=False)
     melspec, magnitudes, phases, energy = _stft.mel_spectrogram(audio)
-    melspec = torch.squeeze(melspec, 0).numpy().astype(np.float32)
-    magnitudes = torch.squeeze(magnitudes, 0).numpy().astype(np.float32)
-    energy = torch.squeeze(energy, 0).numpy().astype(np.float32)
+    melspec = torch.squeeze(melspec, 0)
+    magnitudes = torch.squeeze(magnitudes, 0)
+    energy = torch.squeeze(energy, 0)
     return melspec, magnitudes, energy
 
 
